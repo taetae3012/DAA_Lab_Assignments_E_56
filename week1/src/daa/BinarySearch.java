@@ -4,12 +4,12 @@ import java.util.Scanner;
 //algo is right working problem is in the main loop
 //firstly committed the program week2 remainning
 //whole thing is not pushed to the github.
-
+//it is recursive binary search
 public class BinarySearch {
 	
-	int binarysearch(int arr[],int l,int r,int x) {
+	static int binarysearch(int arr[],int l,int r,int x) {
 		if(r>=l) {
-			int mid =1+(r-l)/2;
+			int mid =l+(r-l)/2;
 			if(arr[mid]==x) {
 				return mid;
 			}
@@ -23,7 +23,12 @@ public class BinarySearch {
 	
 	
    public static void main(String[] args) {
-	   BinarySearch ob=new BinarySearch();
+	  /* int arr[]= {1,3,4,35,78};
+		
+		int index=binarysearch(arr,0,4,35);
+		
+		System.out.println(index);*/
+	  BinarySearch ob=new BinarySearch();
 	   Scanner sc=new Scanner(System.in);
 	   int test=sc.nextInt();
 	   
@@ -43,7 +48,7 @@ public class BinarySearch {
 		   } 
 		   
 	   }
-			   
+			  
 	 
 	   
 	  

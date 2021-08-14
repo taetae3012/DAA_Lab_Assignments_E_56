@@ -27,11 +27,7 @@ public class JumpSearch {
 		return -1;
 	}
 public static void main(String[] args) {
-	/*int arr[]= {1,3,4,35,78};
-	
-	int index=jumpSearch(arr,35);
-	
-	System.out.println(index);*/
+
 	 JumpSearch ob=new JumpSearch();
 	   Scanner sc=new Scanner(System.in);
 	   int test=sc.nextInt();
