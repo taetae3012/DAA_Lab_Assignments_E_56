@@ -44,7 +44,7 @@ public class BinarySearch {
 			   System.out.println("Not Present");
 		   }
 		   else {
-			   System.out.println("Present"+result);
+			   System.out.println("Present"+ " " + result);
 		   } 
 		   
 	   }
