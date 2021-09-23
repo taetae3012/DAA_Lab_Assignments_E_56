@@ -1,62 +1,57 @@
-#include <bits/stdc++.h>
-
+#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-void markVisited(int **G, int n, int k)
-{
-    for (int i = 0; i < n; ++i)
-        G[i][k] = 2;
-}
+void dfs(int s,int d,int v,vector<int> *graph)
+{   
+    bool visited[v]={false};
+    
+    stack<int> st;
+    st.push(s);
 
-bool dfs(int **G, int n, int s, int d)
-{
-    vector<int> st;
-    st.push_back(s);
-    markVisited(G, n, s);
-    while (!st.empty())
+    while(!st.empty())
     {
-        int x = st.back();
-        st.pop_back();
-        if (G[x][d] == 1)
-            return true;
-        else
+        int i,x;
+        int curr=st.top();
+        st.pop();
+        visited[curr]=true;
+        for(i=0;i<v;i++)
         {
-            for (int i = 0; i < n; ++i)
-                if (G[x][i] == 1)
-                    st.push_back(i);
-            markVisited(G, n, x);
+
+            int x=graph[curr][i];
+            if(x==0)
+            continue;
+            if(!visited[i])
+            {
+                st.push(i);
+                visited[i]=1;
+                if(i==d)
+                {
+                    cout<<"yes path exists";
+                    return;
+                }
+            }
         }
     }
-    return false;
+    cout<<"no such path exists ";
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    int n;
-    cin >> n;
+    int j,i;
+    int v,s,d,x;
+    cin>>v;
+ 
+    vector<int> graph[v];
+    for(i=0;i<v;i++)
+    for(j=0;j<v;j++)
+    {
+        cin>>x;
+        graph[i].push_back(x);
+    }
 
-    int **arr;
-    arr = (int **)malloc(n * sizeof(int *));
+    cin>>s>>d;
 
-    for (int i = 0; i < n; ++i)
-        arr[i] = (int *)malloc(n * sizeof(int));
-
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j)
-            cin >> arr[i][j];
-
-    int s, d;
-    cin >> s >> d;
-    bool isPresent = dfs(arr, n, s - 1, d - 1);
-    if (isPresent)
-        cout << "Yes Path Exists" << endl;
-    else
-        cout << "No Path Does Not Exist" << endl;
+    dfs(s-1,d-1,v,graph);
     return 0;
 }
