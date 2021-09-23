@@ -2,38 +2,36 @@
 
 using namespace std;
 
-void markVisited(int **G, int n, int k)
-{
-    for (int i = 0; i < n; ++i)
-        if (G[i][k] == 1)
-            G[i][k] = 2;
-}
 
-bool bipartite(int **G, int n)
+
+bool bfs(int v,vector<int> *graph)
 {
-    queue<int> Queue;
-    Queue.push(0);
-    int color[n] = {1};
-    markVisited(G, n, 0);
-    while (!Queue.empty())
+    int color[v]={0};
+    queue<int> q;
+    int c=1;
+    color[0]=c;
+    q.push(0);
+
+    while(!q.empty())
     {
-        int u = Queue.front();
-        Queue.pop();
-        int curCol = color[u] * -1;
-        for (int i = 0; i < n; ++i)
-        {
-            if (G[u][i] != 0)
+        int i;
+        int curr=q.front();
+        q.pop();
+        c=color[curr]*-1;
+        if(graph[curr][curr])
+            return false;
+        for(i=0;i<v;i++)
+        {          
+            int x=graph[curr][i];
+            if(x==0)
+            continue;
+            if(!color[i])
             {
-                if (color[i] == 0)
-                    color[i] = curCol;
-                else if (color[i] != curCol)
-                    return false;
-                if (G[u][i] == 1)
-                {
-                    Queue.push(i);
-                    markVisited(G, n, i);
-                }
+                color[i]=c;
+                q.push(i);
             }
+            else if(color[i]!=c)
+            return false;
         }
     }
     return true;
@@ -41,31 +39,21 @@ bool bipartite(int **G, int n)
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    int n;
-    cin >> n;
+    int i,j,x;
+    int v;
+    cin>>v;
 
-    int **arr;
-    arr = (int **)malloc(n * sizeof(int *));
-
-    for (int i = 0; i < n; ++i)
-        arr[i] = (int *)malloc(n * sizeof(int));
-
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j)
-            cin >> arr[i][j];
-
-    int s, d;
-    cin >> s >> d;
-    bool isBipartite = bipartite(arr, n);
-    if (isBipartite)
-        cout << "Bipartite" << endl;
+    vector<int> graph[v];
+    for(i=0;i<v;i++)
+    for(j=0;j<v;j++)
+    {
+        cin>>x;
+        graph[i].push_back(x);
+    }
+    if(bfs(v,graph))
+    cout<<"Yes Bipartite";
     else
-        cout << "Not Bipartite" << endl;
+    
+        cout<<"Not Bipartite";
     return 0;
 }
